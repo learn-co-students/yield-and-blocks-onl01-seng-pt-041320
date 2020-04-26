@@ -1,30 +1,9 @@
 require "spec_helper"
 
 describe "#hello_t" do
-  let (:names) { ["Tim", "Tom", "Jim"] }
-
-  it "calls the block once for each element in the passed-in array" do
-    expect{ hello_t(names){ |name| puts name } }
-      .to output("Tim\nTom\nJim\n")
-      .to_stdout
-  end
-
-  it "returns the original array" do
-    expect( hello_t(names){ |name| puts name } )
-      .to eq(names)
-  end
-
-  it "is not hard-coded" do
-    other_names = ["Ali", "Jasmine", "Persephone"]
-
-    expect{ hello_t(other_names){ |name| puts name.upcase } }
-      .to output("ALI\nJASMINE\nPERSEPHONE\n")
-      .to_stdout
-  end
-
-  it "fails gracefully when a block is not passed in" do
-    expect{ hello_t(names) }
-      .to output("Hey! No block was given!\n")
-      .to_stdout
+  it "takes in an argument of an array and puts out a greeting to each person in the array whose name begins with the letter T" do
+    array = ["Tim", "Tom", "Jim"]
+    expect{hello_t(array) {|name| puts "Hi, #{name}" if name.start_with?('T') }}.to output("Hi, Tim\nHi, Tom\n").to_stdout
+    expect(hello_t(array) {|name| puts "Hi, #{name}" if name.start_with?('T') }).to eq(array)
   end
 end
